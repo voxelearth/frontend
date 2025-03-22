@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mask Generator - Pixel Editor</title>
+    <style>
+      /* Grid container styling */
+      #grid {
+        display: grid;
+        grid-template-columns: repeat(13, 40px);
+        grid-template-rows: repeat(14, 40px);
+        gap: 1px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+      }
+      /* Each cell is 40x40 pixels */
+      .cell {
+        width: 40px;
+        height: 40px;
+        background: #f0f0f0;
+        cursor: pointer;
+      }
+      /* When a cell is toggled on, it shows white */
+      .cell.on {
+        background: white;
+      }
+      /* Simple styling for buttons and textareas */
+      button, textarea, input[type="checkbox"] {
+        margin: 5px 0;
+        font-size: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Pixel Editor</h2>
+    <!-- The pixel grid -->
+    <div id="grid"></div>
+
+    <!-- Export options -->
+    <button id="export-btn">Export Mask</button>
+    <input type="checkbox" id="toggle-union" />
+    <label for="toggle-union">Export as Single Unioned Path</label>
+    <br />
+    <!-- Output area for the SVG code -->
+    <textarea
+      id="export-output"
+      rows="10"
+      cols="80"
+      placeholder="SVG code appears here"
+    ></textarea>
+    <br />
+    <!-- Output area for the Data URL -->
+    <textarea
+      id="dataurl-output"
+      rows="5"
+      cols="80"
+      placeholder="Data URL appears here"
+    ></textarea>
+    
+    <hr />
+    
+    <!-- Import section -->
+    <h3>Import SVG</h3>
+    <textarea
+      id="import-input"
+      rows="10"
+      cols="80"
+      placeholder="Paste SVG code or Data URL here"
+    ></textarea>
+    <br />
+    <button id="import-btn">Import SVG</button>
+    <button id="reset-btn">Start Fresh</button>
+
+    <script>
+      // Grid dimensions and cell size
+      const cols = 13;
+      const rows = 14;
+      const cellSize = 40;
+      const grid = document.getElementById("grid");
+
+      // Create grid cells
+      // (Store them in the DOM for easy querying using data-row and data-col)
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const cell = document.createElement("div");
+          cell.classList.add("cell");
+          cell.dataset.row = r;
+          cell.dataset.col = c;
+          // Toggle cell state on click
+          cell.addEventListener("click", () => {
+            cell.classList.toggle("on");
+          });
+          grid.appendChild(cell);
+        }
+      }
+
+      // Export the current mask as an SVG and data URL.
+      function exportSVG() {
+        const unionToggle = document.getElementById("toggle-union").checked;
+        let svgContent = "";
+        if (unionToggle) {
+          // Create one single path containing all the "on" cells.
+          let pathData = "";
+          document.querySelectorAll(".cell.on").forEach(cell => {
+            const r = parseInt(cell.dataset.row, 10);
+            const c = parseInt(cell.dataset.col, 10);
+            const x = c * cellSize;
+            const y = r * cellSize;
+            // Each subpath: move to the cell's top‑left, draw right, down, left, then close.
+            pathData += `M${x} ${y} h${cellSize} v${cellSize} h-${cellSize} Z `;
+          });
+          svgContent = `<path fill="white" d="${pathData.trim()}" />\n`;
+        } else {
+          // Output each cell as an individual rectangle.
+          document.querySelectorAll(".cell.on").forEach(cell => {
+            const r = parseInt(cell.dataset.row, 10);
+            const c = parseInt(cell.dataset.col, 10);
+            const x = c * cellSize;
+            const y = r * cellSize;
+            svgContent += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" fill="white" />\n`;
+          });
+        }
+        // Wrap in an SVG element.
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${cols * cellSize}" height="${rows * cellSize}">\n${svgContent}</svg>`;
+        // Output the SVG code.
+        document.getElementById("export-output").value = svg;
+        // Generate and output a data URL.
+        const dataURL = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+        document.getElementById("dataurl-output").value = dataURL;
+      }
+      document.getElementById("export-btn").addEventListener("click", exportSVG);
+
+      // Clear the grid (turn all cells off)
+      function resetGrid() {
+        document.querySelectorAll(".cell").forEach(cell => cell.classList.remove("on"));
+      }
+      document.getElementById("reset-btn").addEventListener("click", resetGrid);
+
+      // Import an SVG or data URL and reconstruct the grid.
+      function importSVG() {
+        let input = document.getElementById("import-input").value.trim();
+        if (!input) return;
+        let svgText = input;
+        // If the input is a data URL, decode it.
+        if (svgText.startsWith("data:image/svg+xml")) {
+          const commaIndex = svgText.indexOf(",");
+          if (commaIndex !== -1) {
+            svgText = decodeURIComponent(svgText.substring(commaIndex + 1));
+          }
+        }
+        // Parse the SVG string.
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(svgText, "image/svg+xml");
+        // Clear the grid first.
+        resetGrid();
+        // Process any <rect> elements.
+        const rects = doc.querySelectorAll("rect");
+        rects.forEach(rect => {
+          const x = parseFloat(rect.getAttribute("x"));
+          const y = parseFloat(rect.getAttribute("y"));
+          const c = Math.round(x / cellSize);
+          const r = Math.round(y / cellSize);
+          const cell = document.querySelector(`.cell[data-row="${r}"][data-col="${c}"]`);
+          if (cell) {
+            cell.classList.add("on");
+          }
+        });
+        // Also process a single <path> if present.
+        const path = doc.querySelector("path");
+        if (path) {
+          // Assume path data is a series of commands like: Mx y h40 v40 h-40 Z
+          const d = path.getAttribute("d");
+          // Split by "Z" to get each subpath.
+          const subpaths = d.split("Z");
+          subpaths.forEach(sub => {
+            sub = sub.trim();
+            if (sub === "") return;
+            // Use a regex to capture the starting M command coordinates.
+            const match = sub.match(/M\s*([\d.-]+)\s+([\d.-]+)/);
+            if (match) {
+              const x = parseFloat(match[1]);
+              const y = parseFloat(match[2]);
+              const c = Math.round(x / cellSize);
+              const r = Math.round(y / cellSize);
+              const cell = document.querySelector(`.cell[data-row="${r}"][data-col="${c}"]`);
+              if (cell) {
+                cell.classList.add("on");
+              }
+            }
+          });
+        }
+      }
+      document.getElementById("import-btn").addEventListener("click", importSVG);
+    </script>
+  </body>
+</html>
