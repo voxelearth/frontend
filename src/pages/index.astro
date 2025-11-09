@@ -12,7 +12,7 @@ import ReviewSlider from "~/components/ReviewSlider.astro";
 
 // Images (you can replace these with real Voxel Earth images if desired)
 // import PizzaHero from "~/assets/images/pizza-hero.png";
-import PizzaHero from "~/assets/images/screen/buildings.png";
+import PizzaHero from "~/assets/images/screen/cover.png";
 import Pizza from "~/assets/images/screen/tower.png";
 import Spaghetti from "~/assets/images/screen/paris.jpg";
 import Fish from "~/assets/images/screen/download (3).jpg";
@@ -21,6 +21,8 @@ import reviewAuthors from "~/assets/images/review-authors.png";
 import Dessert from "~/assets/images/screen/download (7).jpg";
 import Mussels from "~/assets/images/screen/fuji.png";
 import Dessert2 from "~/assets/images/screen/download (4).jpg";
+import PixelMask1 from "~/assets/images/gallery/pixelmask1.png";
+import PixelMask2 from "~/assets/images/gallery/pixelmask2.png";
 ---
 
 <Layout title="Home" pageTitle="Voxel Earth" description="Voxel Earth: Explore real-world 3D Tiles in Minecraft">
@@ -78,7 +80,7 @@ import Dessert2 from "~/assets/images/screen/download (4).jpg";
 		class="pixel-frame relative w-full max-w-[520px] aspect-[13/14] mx-auto"
 		data-parallax-frame="true"
 		data-parallax-speed="2.0"
-		data-parallax-max="110"
+		data-parallax-max="30"
 	  >
 		<!-- The image is absolutely positioned to fill the container -->
 		<Picture
@@ -92,10 +94,14 @@ import Dessert2 from "~/assets/images/screen/download (4).jpg";
 		/>
 	  
 		<!-- Overlay is also absolutely positioned, ensuring perfect alignment -->
-		<div
-		  class="pixel-frame__overlay absolute inset-0 pointer-events-none"
-		 style="background: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22520%22%20height%3D%22560%22%3E%0A%3Cpath%20fill%3D%22white%22%20d%3D%22M0%200%20h40%20v40%20h-40%20Z%20M40%200%20h40%20v40%20h-40%20Z%20M80%200%20h40%20v40%20h-40%20Z%20M120%200%20h40%20v40%20h-40%20Z%20M160%200%20h40%20v40%20h-40%20Z%20M280%200%20h40%20v40%20h-40%20Z%20M320%200%20h40%20v40%20h-40%20Z%20M400%200%20h40%20v40%20h-40%20Z%20M440%200%20h40%20v40%20h-40%20Z%20M480%200%20h40%20v40%20h-40%20Z%20M0%2040%20h40%20v40%20h-40%20Z%20M40%2040%20h40%20v40%20h-40%20Z%20M320%2040%20h40%20v40%20h-40%20Z%20M480%2040%20h40%20v40%20h-40%20Z%20M0%2080%20h40%20v40%20h-40%20Z%20M80%2080%20h40%20v40%20h-40%20Z%20M120%2080%20h40%20v40%20h-40%20Z%20M440%2080%20h40%20v40%20h-40%20Z%20M480%20200%20h40%20v40%20h-40%20Z%20M0%20280%20h40%20v40%20h-40%20Z%20M40%20280%20h40%20v40%20h-40%20Z%20M0%20320%20h40%20v40%20h-40%20Z%20M40%20480%20h40%20v40%20h-40%20Z%20M320%20480%20h40%20v40%20h-40%20Z%20M480%20480%20h40%20v40%20h-40%20Z%20M0%20520%20h40%20v40%20h-40%20Z%20M40%20520%20h40%20v40%20h-40%20Z%20M80%20520%20h40%20v40%20h-40%20Z%20M280%20520%20h40%20v40%20h-40%20Z%20M320%20520%20h40%20v40%20h-40%20Z%20M360%20520%20h40%20v40%20h-40%20Z%20M400%20520%20h40%20v40%20h-40%20Z%22%20%2F%3E%0A%3C%2Fsvg%3E') no-repeat center / cover;">
-		</div>
+		<Image
+		  src={PixelMask1}
+		  alt=""
+		  class="pixel-frame__overlay absolute inset-0 pointer-events-none select-none"
+		  loading="lazy"
+		  decoding="async"
+		  aria-hidden="true"
+		/>
 	  </div>
 	  
 
@@ -152,8 +158,8 @@ import Dessert2 from "~/assets/images/screen/download (4).jpg";
           <div
             class="pixel-frame relative max-w-[520px] aspect-[13/14] not-prose w-full mx-auto mb-10"
             data-parallax-frame="true"
-            data-parallax-speed="1.4"
-            data-parallax-max="70"
+            data-parallax-speed="0.85"
+            data-parallax-max="60"
           >
             <Picture
               src={Pizza}
@@ -164,10 +170,14 @@ import Dessert2 from "~/assets/images/screen/download (4).jpg";
               fetchpriority="high"
               class="pixel-frame__image absolute inset-0 w-full h-full object-cover z-[2]"
             />
-            <div
-              class="pixel-frame__overlay absolute inset-0 pointer-events-none"
-              style="background: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22520%22%20height%3D%22560%22%3E%0A%3Cpath%20fill%3D%22white%22%20d%3D%22M0%200%20h40%20v40%20h-40%20Z%20M40%200%20h40%20v40%20h-40%20Z%20M80%200%20h40%20v40%20h-40%20Z%20M120%200%20h40%20v40%20h-40%20Z%20M160%200%20h40%20v40%20h-40%20Z%20M280%200%20h40%20v40%20h-40%20Z%20M320%200%20h40%20v40%20h-40%20Z%20M400%200%20h40%20v40%20h-40%20Z%20M440%200%20h40%20v40%20h-40%20Z%20M480%200%20h40%20v40%20h-40%20Z%20M0%2040%20h40%20v40%20h-40%20Z%20M40%2040%20h40%20v40%20h-40%20Z%20M320%2040%20h40%20v40%20h-40%20Z%20M480%2040%20h40%20v40%20h-40%20Z%20M0%2080%20h40%20v40%20h-40%20Z%20M80%2080%20h40%20v40%20h-40%20Z%20M120%2080%20h40%20v40%20h-40%20Z%20M440%2080%20h40%20v40%20h-40%20Z%20M480%20200%20h40%20v40%20h-40%20Z%20M0%20280%20h40%20v40%20h-40%20Z%20M40%20280%20h40%20v40%20h-40%20Z%20M0%20320%20h40%20v40%20h-40%20Z%20M40%20480%20h40%20v40%20h-40%20Z%20M320%20480%20h40%20v40%20h-40%20Z%20M480%20480%20h40%20v40%20h-40%20Z%20M0%20520%20h40%20v40%20h-40%20Z%20M40%20520%20h40%20v40%20h-40%20Z%20M80%20520%20h40%20v40%20h-40%20Z%20M280%20520%20h40%20v40%20h-40%20Z%20M320%20520%20h40%20v40%20h-40%20Z%20M360%20520%20h40%20v40%20h-40%20Z%20M400%20520%20h40%20v40%20h-40%20Z%22%20%2F%3E%0A%3C%2Fsvg%3E') no-repeat center / cover;"
-            ></div>
+            <Image
+              src={PixelMask2}
+              alt=""
+              class="pixel-frame__overlay absolute inset-0 pointer-events-none select-none"
+              loading="lazy"
+              decoding="async"
+              aria-hidden="true"
+            />
           </div>
           <!-- Text below the image container -->
           <h3 class="h4 mt-0 font-black">Global 3D Tiles</h3>
@@ -185,8 +195,8 @@ import Dessert2 from "~/assets/images/screen/download (4).jpg";
           <div
             class="pixel-frame relative max-w-[520px] aspect-[13/14] not-prose w-full mx-auto mb-10"
             data-parallax-frame="true"
-            data-parallax-speed="1.6"
-            data-parallax-max="80"
+            data-parallax-speed="1.35"
+            data-parallax-max="85"
           >
             <Picture
               src={Spaghetti}
@@ -197,10 +207,14 @@ import Dessert2 from "~/assets/images/screen/download (4).jpg";
               fetchpriority="high"
               class="pixel-frame__image absolute inset-0 w-full h-full object-cover z-[2]"
             />
-            <div
-              class="pixel-frame__overlay absolute inset-0 pointer-events-none"
-              style="background: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22520%22%20height%3D%22560%22%3E%0A%3Cpath%20fill%3D%22white%22%20d%3D%22M0%200%20h40%20v40%20h-40%20Z%20M280%200%20h40%20v40%20h-40%20Z%20M400%200%20h40%20v40%20h-40%20Z%20M480%200%20h40%20v40%20h-40%20Z%20M0%2040%20h40%20v40%20h-40%20Z%20M40%2040%20h40%20v40%20h-40%20Z%20M320%2040%20h40%20v40%20h-40%20Z%20M40%2080%20h40%20v40%20h-40%20Z%20M480%2080%20h40%20v40%20h-40%20Z%20M0%20200%20h40%20v40%20h-40%20Z%20M480%20200%20h40%20v40%20h-40%20Z%20M0%20240%20h40%20v40%20h-40%20Z%20M0%20280%20h40%20v40%20h-40%20Z%20M0%20320%20h40%20v40%20h-40%20Z%20M40%20320%20h40%20v40%20h-40%20Z%20M480%20320%20h40%20v40%20h-40%20Z%20M440%20360%20h40%20v40%20h-40%20Z%20M480%20360%20h40%20v40%20h-40%20Z%20M0%20400%20h40%20v40%20h-40%20Z%20M0%20440%20h40%20v40%20h-40%20Z%20M0%20480%20h40%20v40%20h-40%20Z%20M40%20480%20h40%20v40%20h-40%20Z%20M240%20480%20h40%20v40%20h-40%20Z%20M480%20480%20h40%20v40%20h-40%20Z%20M0%20520%20h40%20v40%20h-40%20Z%20M40%20520%20h40%20v40%20h-40%20Z%20M80%20520%20h40%20v40%20h-40%20Z%20M120%20520%20h40%20v40%20h-40%20Z%20M160%20520%20h40%20v40%20h-40%20Z%20M240%20520%20h40%20v40%20h-40%20Z%20M280%20520%20h40%20v40%20h-40%20Z%20M320%20520%20h40%20v40%20h-40%20Z%20M360%20520%20h40%20v40%20h-40%20Z%20M400%20520%20h40%20v40%20h-40%20Z%20M440%20520%20h40%20v40%20h-40%20Z%22%20%2F%3E%0A%3C%2Fsvg%3E') no-repeat center / cover;"
-            ></div>
+            <Image
+              src={PixelMask1}
+              alt=""
+              class="pixel-frame__overlay absolute inset-0 pointer-events-none select-none"
+              loading="lazy"
+              decoding="async"
+              aria-hidden="true"
+            />
           </div>
           <h3 class="h4 mt-0 font-black">GPU-Powered</h3>
           <p>
@@ -217,8 +231,8 @@ import Dessert2 from "~/assets/images/screen/download (4).jpg";
           <div
             class="pixel-frame relative max-w-[520px] aspect-[13/14] not-prose w-full mx-auto mb-10"
             data-parallax-frame="true"
-            data-parallax-speed="1.8"
-            data-parallax-max="90"
+            data-parallax-speed="1.85"
+            data-parallax-max="110"
           >
             <Picture
               src={Fish}
@@ -229,10 +243,14 @@ import Dessert2 from "~/assets/images/screen/download (4).jpg";
               fetchpriority="high"
               class="pixel-frame__image absolute inset-0 w-full h-full object-cover z-[2]"
             />
-            <div
-              class="pixel-frame__overlay absolute inset-0 pointer-events-none"
-              style="background: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22520%22%20height%3D%22560%22%3E%0A%3Cpath%20fill%3D%22white%22%20d%3D%22M0%200%20h40%20v40%20h-40%20Z%20M40%200%20h40%20v40%20h-40%20Z%20M80%200%20h40%20v40%20h-40%20Z%20M120%200%20h40%20v40%20h-40%20Z%20M160%200%20h40%20v40%20h-40%20Z%20M280%200%20h40%20v40%20h-40%20Z%20M320%200%20h40%20v40%20h-40%20Z%20M400%200%20h40%20v40%20h-40%20Z%20M440%200%20h40%20v40%20h-40%20Z%20M480%200%20h40%20v40%20h-40%20Z%20M0%2040%20h40%20v40%20h-40%20Z%20M40%2040%20h40%20v40%20h-40%20Z%20M320%2040%20h40%20v40%20h-40%20Z%20M480%2040%20h40%20v40%20h-40%20Z%20M0%2080%20h40%20v40%20h-40%20Z%20M80%2080%20h40%20v40%20h-40%20Z%20M120%2080%20h40%20v40%20h-40%20Z%20M440%2080%20h40%20v40%20h-40%20Z%20M480%20200%20h40%20v40%20h-40%20Z%20M0%20280%20h40%20v40%20h-40%20Z%20M40%20280%20h40%20v40%20h-40%20Z%20M0%20320%20h40%20v40%20h-40%20Z%20M40%20480%20h40%20v40%20h-40%20Z%20M320%20480%20h40%20v40%20h-40%20Z%20M480%20480%20h40%20v40%20h-40%20Z%20M0%20520%20h40%20v40%20h-40%20Z%20M40%20520%20h40%20v40%20h-40%20Z%20M80%20520%20h40%20v40%20h-40%20Z%20M280%20520%20h40%20v40%20h-40%20Z%20M320%20520%20h40%20v40%20h-40%20Z%20M360%20520%20h40%20v40%20h-40%20Z%20M400%20520%20h40%20v40%20h-40%20Z%22%20%2F%3E%0A%3C%2Fsvg%3E') no-repeat center / cover;"
-            ></div>
+            <Image
+              src={PixelMask1}
+              alt=""
+              class="pixel-frame__overlay absolute inset-0 pointer-events-none select-none"
+              loading="lazy"
+              decoding="async"
+              aria-hidden="true"
+            />
           </div>
           <h3 class="h4 mt-0 font-black">Rich Textures</h3>
           <p>
@@ -343,11 +361,14 @@ import Dessert2 from "~/assets/images/screen/download (4).jpg";
 		   />
 		 
 		   <!-- Overlay is also absolutely positioned, ensuring perfect alignment -->
-		   <div
-			 class="pixel-frame__overlay absolute inset-0 pointer-events-none"
-			style="background: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22520%22%20height%3D%22560%22%3E%0A%3Cpath%20fill%3D%22white%22%20d%3D%22M0%200%20h40%20v40%20h-40%20Z%20M280%200%20h40%20v40%20h-40%20Z%20M400%200%20h40%20v40%20h-40%20Z%20M480%200%20h40%20v40%20h-40%20Z%20M0%2040%20h40%20v40%20h-40%20Z%20M40%2040%20h40%20v40%20h-40%20Z%20M320%2040%20h40%20v40%20h-40%20Z%20M40%2080%20h40%20v40%20h-40%20Z%20M480%2080%20h40%20v40%20h-40%20Z%20M0%20200%20h40%20v40%20h-40%20Z%20M480%20200%20h40%20v40%20h-40%20Z%20M0%20240%20h40%20v40%20h-40%20Z%20M0%20280%20h40%20v40%20h-40%20Z%20M0%20320%20h40%20v40%20h-40%20Z%20M40%20320%20h40%20v40%20h-40%20Z%20M480%20320%20h40%20v40%20h-40%20Z%20M440%20360%20h40%20v40%20h-40%20Z%20M480%20360%20h40%20v40%20h-40%20Z%20M0%20400%20h40%20v40%20h-40%20Z%20M0%20440%20h40%20v40%20h-40%20Z%20M0%20480%20h40%20v40%20h-40%20Z%20M40%20480%20h40%20v40%20h-40%20Z%20M240%20480%20h40%20v40%20h-40%20Z%20M480%20480%20h40%20v40%20h-40%20Z%20M0%20520%20h40%20v40%20h-40%20Z%20M40%20520%20h40%20v40%20h-40%20Z%20M80%20520%20h40%20v40%20h-40%20Z%20M120%20520%20h40%20v40%20h-40%20Z%20M160%20520%20h40%20v40%20h-40%20Z%20M240%20520%20h40%20v40%20h-40%20Z%20M280%20520%20h40%20v40%20h-40%20Z%20M320%20520%20h40%20v40%20h-40%20Z%20M360%20520%20h40%20v40%20h-40%20Z%20M400%20520%20h40%20v40%20h-40%20Z%20M440%20520%20h40%20v40%20h-40%20Z%22%20%2F%3E%0A%3C%2Fsvg%3E') no-repeat center / cover;">
-
-		   </div>
+		   <Image
+			 src={PixelMask2}
+			 alt=""
+			 class="pixel-frame__overlay absolute inset-0 pointer-events-none select-none"
+			 loading="lazy"
+			 decoding="async"
+			 aria-hidden="true"
+		   />
 		 </div>
 		 
 		  
@@ -406,10 +427,14 @@ import Dessert2 from "~/assets/images/screen/download (4).jpg";
       />
       
       <!-- Overlay is also absolutely positioned, ensuring perfect alignment -->
-      <div
-        class="pixel-frame__overlay absolute inset-0 pointer-events-none"
-       style="background: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22520%22%20height%3D%22560%22%3E%0A%3Cpath%20fill%3D%22white%22%20d%3D%22M0%200%20h40%20v40%20h-40%20Z%20M40%200%20h40%20v40%20h-40%20Z%20M80%200%20h40%20v40%20h-40%20Z%20M120%200%20h40%20v40%20h-40%20Z%20M160%200%20h40%20v40%20h-40%20Z%20M280%200%20h40%20v40%20h-40%20Z%20M320%200%20h40%20v40%20h-40%20Z%20M400%200%20h40%20v40%20h-40%20Z%20M440%200%20h40%20v40%20h-40%20Z%20M480%200%20h40%20v40%20h-40%20Z%20M0%2040%20h40%20v40%20h-40%20Z%20M40%2040%20h40%20v40%20h-40%20Z%20M320%2040%20h40%20v40%20h-40%20Z%20M480%2040%20h40%20v40%20h-40%20Z%20M0%2080%20h40%20v40%20h-40%20Z%20M80%2080%20h40%20v40%20h-40%20Z%20M120%2080%20h40%20v40%20h-40%20Z%20M440%2080%20h40%20v40%20h-40%20Z%20M480%20200%20h40%20v40%20h-40%20Z%20M0%20280%20h40%20v40%20h-40%20Z%20M40%20280%20h40%20v40%20h-40%20Z%20M0%20320%20h40%20v40%20h-40%20Z%20M40%20480%20h40%20v40%20h-40%20Z%20M320%20480%20h40%20v40%20h-40%20Z%20M480%20480%20h40%20v40%20h-40%20Z%20M0%20520%20h40%20v40%20h-40%20Z%20M40%20520%20h40%20v40%20h-40%20Z%20M80%20520%20h40%20v40%20h-40%20Z%20M280%20520%20h40%20v40%20h-40%20Z%20M320%20520%20h40%20v40%20h-40%20Z%20M360%20520%20h40%20v40%20h-40%20Z%20M400%20520%20h40%20v40%20h-40%20Z%22%20%2F%3E%0A%3C%2Fsvg%3E') no-repeat center / cover;">
-      </div>
+      <Image
+        src={PixelMask1}
+        alt=""
+        class="pixel-frame__overlay absolute inset-0 pointer-events-none select-none"
+        loading="lazy"
+        decoding="async"
+        aria-hidden="true"
+      />
       </div>
       
 
@@ -437,7 +462,7 @@ import Dessert2 from "~/assets/images/screen/download (4).jpg";
           </div>
         </div>
 
-        <div slot="hero-content-right">
+        <div slot="hero-content-right" class="pixel-art float-bob">
           <Picture src={reviewAuthors} alt="Happy explorers" class="w-full h-auto" />
         </div>
       </Hero>
@@ -527,10 +552,14 @@ import Dessert2 from "~/assets/images/screen/download (4).jpg";
 		/>
 	  
 		<!-- Overlay is also absolutely positioned, ensuring perfect alignment -->
-		<div
-		  class="pixel-frame__overlay absolute inset-0 pointer-events-none"
-		 style="background: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22520%22%20height%3D%22560%22%3E%0A%3Cpath%20fill%3D%22white%22%20d%3D%22M0%200%20h40%20v40%20h-40%20Z%20M40%200%20h40%20v40%20h-40%20Z%20M80%200%20h40%20v40%20h-40%20Z%20M120%200%20h40%20v40%20h-40%20Z%20M160%200%20h40%20v40%20h-40%20Z%20M280%200%20h40%20v40%20h-40%20Z%20M320%200%20h40%20v40%20h-40%20Z%20M400%200%20h40%20v40%20h-40%20Z%20M440%200%20h40%20v40%20h-40%20Z%20M480%200%20h40%20v40%20h-40%20Z%20M0%2040%20h40%20v40%20h-40%20Z%20M40%2040%20h40%20v40%20h-40%20Z%20M320%2040%20h40%20v40%20h-40%20Z%20M480%2040%20h40%20v40%20h-40%20Z%20M0%2080%20h40%20v40%20h-40%20Z%20M80%2080%20h40%20v40%20h-40%20Z%20M120%2080%20h40%20v40%20h-40%20Z%20M440%2080%20h40%20v40%20h-40%20Z%20M480%20200%20h40%20v40%20h-40%20Z%20M0%20280%20h40%20v40%20h-40%20Z%20M40%20280%20h40%20v40%20h-40%20Z%20M0%20320%20h40%20v40%20h-40%20Z%20M40%20480%20h40%20v40%20h-40%20Z%20M320%20480%20h40%20v40%20h-40%20Z%20M480%20480%20h40%20v40%20h-40%20Z%20M0%20520%20h40%20v40%20h-40%20Z%20M40%20520%20h40%20v40%20h-40%20Z%20M80%20520%20h40%20v40%20h-40%20Z%20M280%20520%20h40%20v40%20h-40%20Z%20M320%20520%20h40%20v40%20h-40%20Z%20M360%20520%20h40%20v40%20h-40%20Z%20M400%20520%20h40%20v40%20h-40%20Z%22%20%2F%3E%0A%3C%2Fsvg%3E') no-repeat center / cover;">
-		</div>
+		<Image
+		  src={PixelMask2}
+		  alt=""
+		  class="pixel-frame__overlay absolute inset-0 pointer-events-none select-none"
+		  loading="lazy"
+		  decoding="async"
+		  aria-hidden="true"
+		/>
 	  </div>
 
     </Hero>
@@ -588,10 +617,14 @@ import Dessert2 from "~/assets/images/screen/download (4).jpg";
       />
       
       <!-- Overlay is also absolutely positioned, ensuring perfect alignment -->
-      <div
-        class="pixel-frame__overlay absolute inset-0 pointer-events-none"
-       style="background: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22520%22%20height%3D%22560%22%3E%0A%3Cpath%20fill%3D%22white%22%20d%3D%22M0%200%20h40%20v40%20h-40%20Z%20M40%200%20h40%20v40%20h-40%20Z%20M80%200%20h40%20v40%20h-40%20Z%20M120%200%20h40%20v40%20h-40%20Z%20M160%200%20h40%20v40%20h-40%20Z%20M280%200%20h40%20v40%20h-40%20Z%20M320%200%20h40%20v40%20h-40%20Z%20M400%200%20h40%20v40%20h-40%20Z%20M440%200%20h40%20v40%20h-40%20Z%20M480%200%20h40%20v40%20h-40%20Z%20M0%2040%20h40%20v40%20h-40%20Z%20M40%2040%20h40%20v40%20h-40%20Z%20M320%2040%20h40%20v40%20h-40%20Z%20M480%2040%20h40%20v40%20h-40%20Z%20M0%2080%20h40%20v40%20h-40%20Z%20M80%2080%20h40%20v40%20h-40%20Z%20M120%2080%20h40%20v40%20h-40%20Z%20M440%2080%20h40%20v40%20h-40%20Z%20M480%20200%20h40%20v40%20h-40%20Z%20M0%20280%20h40%20v40%20h-40%20Z%20M40%20280%20h40%20v40%20h-40%20Z%20M0%20320%20h40%20v40%20h-40%20Z%20M40%20480%20h40%20v40%20h-40%20Z%20M320%20480%20h40%20v40%20h-40%20Z%20M480%20480%20h40%20v40%20h-40%20Z%20M0%20520%20h40%20v40%20h-40%20Z%20M40%20520%20h40%20v40%20h-40%20Z%20M80%20520%20h40%20v40%20h-40%20Z%20M280%20520%20h40%20v40%20h-40%20Z%20M320%20520%20h40%20v40%20h-40%20Z%20M360%20520%20h40%20v40%20h-40%20Z%20M400%20520%20h40%20v40%20h-40%20Z%22%20%2F%3E%0A%3C%2Fsvg%3E') no-repeat center / cover;">
-      </div>
+      <Image
+        src={PixelMask1}
+        alt=""
+        class="pixel-frame__overlay absolute inset-0 pointer-events-none select-none"
+        loading="lazy"
+        decoding="async"
+        aria-hidden="true"
+      />
       </div>
 
     </Hero>
