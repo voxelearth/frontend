@@ -2,38 +2,136 @@
 ---
 
 <div class="book w-full max-w-2xl mx-auto p-6 md:p-10" style="align-content: center;">
-    <form action="#">
-        <div class="flex flex-col gap-8 mx-auto max-w-xl">
-            <div>
-                <label class="text-lg font-semibold" for="name">Name</label>
-                <div class="mt-3">
-                    <input class="w-full rounded-md border border-slate-200 bg-white/60 p-4 text-lg" type="text" name="name" id="name" required />
-                </div>
-            </div>
+  <form id="ve-contact-form" class="mx-auto max-w-xl space-y-8">
+    <div>
+      <label class="text-lg font-semibold" for="name">Name</label>
+      <div class="mt-3">
+        <input class="w-full rounded-md border border-slate-200 bg-white/60 p-4 text-lg" type="text" name="name" id="name" required />
+      </div>
+    </div>
 
-            <div>
-                <label class="text-lg font-semibold" for="email">Email</label>
-                <div class="mt-3 grid grid-cols-1">
-                    <input class="w-full rounded-md border border-slate-200 bg-white/60 p-4 text-lg" type="email" name="email" id="email" placeholder="you@example.com" required />
-                </div>
-            </div>
+    <div>
+      <label class="text-lg font-semibold" for="email">Email</label>
+      <div class="mt-3">
+        <input class="w-full rounded-md border border-slate-200 bg-white/60 p-4 text-lg" type="email" name="email" id="email" placeholder="you@example.com" required />
+      </div>
+    </div>
 
-            <div>
-                <label class="text-lg font-semibold" for="message">Message</label>
-                <div class="mt-3">
-                    <textarea class="w-full rounded-md border border-slate-200 bg-white/60 p-4 text-lg" name="message" id="message" rows="6" required></textarea>
-                </div>
-            </div>
+    <div>
+      <label class="text-lg font-semibold" for="message">Message</label>
+      <div class="mt-3">
+        <textarea class="w-full rounded-md border border-slate-200 bg-white/60 p-4 text-lg" name="message" id="message" rows="6" required></textarea>
+      </div>
+    </div>
 
-            <div class="pt-4">
-                <button
-                    style="background-image: url(/imgs/ui/button-inside.png);"
-                    type="submit"
-                    class="button button-green group px-12 py-4 text-xl"
-                >
-                    Send
-                </button>
-            </div>
-        </div>
-    </form>
+    <div>
+      <label class="text-lg font-semibold" for="screenshot">Screenshot (optional)</label>
+      <div class="mt-3 space-y-2">
+        <input
+          class="w-full cursor-pointer rounded-md border border-dashed border-slate-300 bg-white/60 p-4 text-base transition focus-visible:ring-2 focus-visible:ring-brand-green/30 file:mr-4 file:rounded-md file:border-0 file:bg-brand-green/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-brand-green file:cursor-pointer file:transition file:duration-200 hover:file:bg-brand-green/20 active:file:bg-brand-green/30 hover:file:text-brand-green active:file:text-brand-green"
+          type="file"
+          name="screenshot"
+          id="screenshot"
+          accept="image/png,image/jpeg,image/webp"
+        />
+        <p class="text-sm text-slate-500">Attach a PNG/JPG/WebP (max ~5 MB). It will be sent with your note.</p>
+      </div>
+    </div>
+
+    <div class="space-y-3 pt-2">
+      <button
+        style="background-image: url(/imgs/ui/button-inside.png);"
+        type="submit"
+        class="button button-green group w-full px-12 py-4 text-xl"
+        data-submit
+      >
+        Send
+      </button>
+      <p class="text-sm font-semibold text-slate-600" data-status role="status" aria-live="polite"></p>
+    </div>
+  </form>
 </div>
+
+<script type="module" is:inline>
+  const endpoint = "https://contact.voxelearth.org/";
+
+  function fileToDataUrl(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function attachHandler() {
+    const form = document.getElementById("ve-contact-form");
+    if (!form || form.dataset.bound === "true") return;
+    form.dataset.bound = "true";
+
+    const statusEl = form.querySelector("[data-status]");
+    const submitBtn = form.querySelector("[data-submit]");
+
+    const setStatus = (message, type = "info") => {
+      if (!statusEl) return;
+      statusEl.textContent = message;
+      statusEl.dataset.state = type;
+    };
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+      const name = String(formData.get("name") ?? "").trim();
+      const email = String(formData.get("email") ?? "").trim();
+      const message = String(formData.get("message") ?? "").trim();
+      const file = formData.get("screenshot");
+
+      if (!name || !email || !message) {
+        setStatus("Please fill out name, email, and message.", "error");
+        return;
+      }
+
+      try {
+        submitBtn?.setAttribute("disabled", "true");
+        setStatus("Sending…");
+
+        let screenshot = "";
+        if (file instanceof File && file.size > 0) {
+          if (file.size > 5 * 1024 * 1024) {
+            throw new Error("Screenshot is larger than 5 MB.");
+          }
+          screenshot = await fileToDataUrl(file);
+        }
+
+        const contactText = `Name: ${name}\nEmail: ${email}\n\n${message}`.trim();
+
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ contactText, screenshot }),
+        });
+
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(text || "Server returned an error.");
+        }
+
+        setStatus("Message sent! We’ll get back to you soon ❤️", "success");
+        form.reset();
+      } catch (error) {
+        setStatus(`Could not send message: ${error instanceof Error ? error.message : error}`, "error");
+      } finally {
+        submitBtn?.removeAttribute("disabled");
+      }
+    });
+  }
+
+  if (document.readyState === "complete" || document.readyState === "interactive") {
+    attachHandler();
+  } else {
+    document.addEventListener("astro:page-load", attachHandler);
+    document.addEventListener("DOMContentLoaded", attachHandler, { once: true });
+  }
+</script>
