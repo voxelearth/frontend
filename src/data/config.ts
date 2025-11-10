@@ -3,8 +3,12 @@ export const siteLang = "en-US";
 export const siteCurrency = "USD";
 export const siteDomain = "voxelearth.org";
 export const siteName = "Voxel Earth";
-export const siteSlogan = "The best pies in the galaxy!";
-export const themeColor = "#FF0000";
+export const siteSlogan = "Photorealistic earth data rebuilt as Minecraft worlds.";
+export const siteDescription =
+	"Voxel Earth streams Google Photorealistic 3D Tiles and high-resolution photogrammetry into persistent Minecraft servers, so anyone can explore real cities in voxels.";
+export const themeColor = "#4C763C";
+export const socialPreviewImage = "/icons/coverwithattribution.jpg";
+export const twitterHandle = "@VoxelEarth";
 
 export const phone = {
 	href: "tel:+123456789",
@@ -31,23 +35,23 @@ export const address = {
 
 export const socialMedia = {
 	facebook: {
-		url: "https://facebook.com",
-		label: "Facebook",
+		url: "https://www.facebook.com/VoxelEarth",
+		label: "Voxel Earth on Facebook",
 		icon: "facebook",
 	},
 	twitter: {
-		url: "https://twitter.com",
-		label: "Twitter",
+		url: "https://twitter.com/VoxelEarth",
+		label: "Voxel Earth on X",
 		icon: "twitter",
 	},
 	instagram: {
-		url: "https://instagram.com",
-		label: "Instagram",
+		url: "https://www.instagram.com/voxel.earth",
+		label: "Voxel Earth on Instagram",
 		icon: "instagram",
 	},
 	youtube: {
-		url: "https://youtube.com",
-		label: "YouTube",
+		url: "https://www.youtube.com/@VoxelEarth",
+		label: "Voxel Earth on YouTube",
 		icon: "youtube",
 	},
 };

@@ -4,14 +4,27 @@ import "~/styles/tailwind.css";
 import { ClientRouter } from "astro:transitions";
 import Header from "~/components/Header.astro";
 import Footer from "~/components/Footer.astro";
+import {
+	siteLang,
+	themeColor,
+	siteName,
+	siteDescription,
+	siteDomain,
+	socialPreviewImage,
+	twitterHandle,
+} from "~/data/config";
+
 const { pageTitle, title, description } = Astro.props;
-const baseUrl = `${Astro.url.protocol}//${Astro.url.host}`;
-const canonicalUrl = Astro.url.toString();
-import { siteLang, themeColor } from "~/data/config";
-const metaKeywords = "Voxel Earth, Google Earth voxels, Photorealistic 3D Tiles, Minecraft Earth, voxel pipeline, virtual worlds, geospatial";
+const requestedUrl = Astro.url ?? Astro.site ?? new URL(`https://${siteDomain}`);
+const siteOrigin = requestedUrl.origin;
+const canonicalUrl = Astro.url?.toString() ?? requestedUrl.toString();
+const resolvedTitle = pageTitle ?? `${title ?? siteName} | ${siteName}`;
+const shareTitle = resolvedTitle;
+const metaDescription = description ?? siteDescription;
+const metaKeywords =
+	"Voxel Earth, Google Photorealistic 3D Tiles, Minecraft server, voxel pipeline, photogrammetry, GPU voxelization, geospatial streaming";
 const metaAuthor = "Voxel Earth Team";
-const ogImage = `${baseUrl}/icons/coverwithattribution.jpg`;
-const siteName = "Voxel Earth";
+const ogImage = new URL(socialPreviewImage, siteOrigin).href;
 ---
 
 <!doctype html>
@@ -20,7 +33,7 @@ const siteName = "Voxel Earth";
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="theme-color" content={themeColor} />
-		<meta name="description" content={description} />
+		<meta name="description" content={metaDescription} />
 		<meta name="keywords" content={metaKeywords} />
 		<meta name="author" content={metaAuthor} />
 		<meta name="robots" content="index,follow" />
@@ -39,20 +52,26 @@ const siteName = "Voxel Earth";
 
 		<meta property="og:url" content={canonicalUrl} />
 		<meta property="og:type" content="website" />
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
+		<meta property="og:title" content={shareTitle} />
+		<meta property="og:description" content={metaDescription} />
 		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:secure_url" content={ogImage} />
+		<meta property="og:image:type" content="image/jpeg" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
 		<meta property="og:image:alt" content="Voxel Earth cover art" />
 		<meta property="og:site_name" content={siteName} />
-		<meta property="og:description" content={description} />
 		<meta property="og:locale" content={siteLang} />
 		<meta name="astro-view-transitions-enabled" content="false" />
 
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:url" content={canonicalUrl} />
-		<meta name="twitter:title" content={title} />
-		<meta name="twitter:description" content={description} />
+		<meta name="twitter:title" content={shareTitle} />
+		<meta name="twitter:description" content={metaDescription} />
 		<meta name="twitter:image" content={ogImage} />
+		<meta name="twitter:image:alt" content="Voxel Earth cover art" />
+		<meta name="twitter:site" content={twitterHandle} />
+		<meta name="twitter:creator" content={twitterHandle} />
 		<script is:inline>
 			{`
         (function() {
@@ -66,7 +85,7 @@ const siteName = "Voxel Earth";
         })();
       `}
 		</script>
-		<title>{pageTitle}</title>
+		<title>{resolvedTitle}</title>
 		<ClientRouter />
 		<script type="module">
 			{`
