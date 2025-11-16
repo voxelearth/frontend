@@ -20,12 +20,6 @@
     "description": "Plugins that integrate voxelized tilesets within Minecraft servers.",
     "repos": [
       {
-        "name": "minecraft-plugin",
-        "description": "Paper plugin that streams voxelized Google 3D Tiles.",
-        "starCount": 64,
-        "url": "https://github.com/voxelearth/minecraft-plugin"
-      },
-      {
         "name": "DynamicLoader",
         "description": "Velocity proxy plugin that spins up/down servers on demand.",
         "starCount": 28,
