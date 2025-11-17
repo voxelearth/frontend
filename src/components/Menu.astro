@@ -1,19 +1,19 @@
 ---
 import { getCollection } from "astro:content";
 import { siteLang, siteCurrency } from "~/data/config";
-const plates = await getCollection("repos");
+const repos = await getCollection("repos");
 const siteLangFormat = siteLang.replace("_", "-");
 ---
 
 <!-- Quick Nav -->
 <div class="mb-20 sticky top-8 z-10">
-	<nav class="bg-brand-green text-zinc-300/90 rounded-full max-w-5xl mx-auto swiper-plates w-full max-w-fit">
-		<ul id="plate-nav" class="px-6 py-3 swiper-wrapper h-auto w-auto">
+	<nav class="bg-brand-green text-zinc-300/90 rounded-full max-w-5xl mx-auto swiper-repos w-full max-w-fit">
+		<ul id="repo-nav" class="px-6 py-3 swiper-wrapper h-auto w-auto">
 			{
-				plates.map((plate) => (
+				repos.map((repo) => (
 					<li class="swiper-slide !w-max ml-8">
-						<a href={`#${plate.data.slug}`} class="font-medium select-none hover:text-white focus:text-white">
-							{plate.data.prettyName}
+						<a href={`#${repo.data.slug}`} class="font-medium select-none hover:text-white focus:text-white">
+							{repo.data.prettyName}
 						</a>
 					</li>
 				))
@@ -24,16 +24,16 @@ const siteLangFormat = siteLang.replace("_", "-");
 
 <div class="grid grid-cols-1 gap-y-32">
 	{
-		plates.map((plate) => (
-			<div id={plate.data.slug} class="space-y-16 scroll-mt-20">
+		repos.map((repo) => (
+			<div id={repo.data.slug} class="space-y-16 scroll-mt-20">
 				<div class="flex flex-col items-center gap-2 max-w-lg mx-auto text-balance text-center">
-					<h3 class="h4 text-brand-green/70">{plate.data.prettyName}</h3>
-					<p>{plate.data.description}</p>
+					<h3 class="h4 text-brand-green/70">{repo.data.prettyName}</h3>
+					<p>{repo.data.description}</p>
 				</div>
 
 				<dl class="max-w-5xl mx-auto">
 					<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-x-16 xl:gap-x-32">
-						{plate.data.repos.map((item) => (
+						{repo.data.repos.map((item) => (
 							<div>
 								<dt>
 									<div class="flex justify-between items-center">
@@ -63,48 +63,3 @@ const siteLangFormat = siteLang.replace("_", "-");
 		))
 	}
 </div>
-
-<script>
-	import Swiper from "swiper";
-	import "swiper/css";
-
-	document.addEventListener("astro:page-load", () => {
-		// Initialize the Swiper for the nav plates
-		const swiperPlates = document.querySelector(".swiper-plates");
-		new Swiper(swiperPlates, {
-			loop: false,
-			spaceBetween: 32,
-			slidesPerView: "auto",
-		});
-
-		// Get all sections (with an id) and nav links
-		const sections = document.querySelectorAll('[id]');
-		const navLinks = document.querySelectorAll('#plate-nav a');
-
-		// Observer callback updates the active nav link based on section visibility
-		const observerCallback = (entries) => {
-			entries.forEach(entry => {
-				if (entry.isIntersecting) {
-					// Remove active style from all nav links
-					navLinks.forEach(link => link.classList.remove('text-white'));
-					// Activate the link matching the current section
-					const currentLink = document.querySelector(`#plate-nav a[href="#${entry.target.id}"]`);
-					if (currentLink) {
-						currentLink.classList.add('text-white');
-					}
-				}
-			});
-		};
-
-		// Adjust the rootMargin so the active state favors the section above
-		const observerOptions = {
-			rootMargin: '-40% 0px -60% 0px'
-		};
-
-		const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-		sections.forEach(section => {
-			observer.observe(section);
-		});
-	});
-</script>
